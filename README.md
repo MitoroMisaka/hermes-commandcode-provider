@@ -1,7 +1,15 @@
 # Hermes Command Code Provider
 
-Use a Command Code subscription with Hermes Agent through the same Pi-style
-`/alpha/generate` path used by `pi-commandcode-provider`.
+A Hermes provider bridge for using Hermes Agent with a Command Code Go
+subscription.
+
+## Why this exists
+
+Command Code Go subscriptions can authenticate the Command Code CLI, but they do
+not include direct access to the Command Code provider API. This plugin works
+around that limitation for personal Hermes usage by running a local
+OpenAI-compatible bridge backed by your existing Command Code subscription
+login.
 
 This project provides:
 
