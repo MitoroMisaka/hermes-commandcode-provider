@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+host="${COMMANDCODE_PROXY_HOST:-127.0.0.1}"
+port="${COMMANDCODE_PROXY_PORT:-8788}"
+home="${HOME:-/Users/liaojinchuan}"
+proxy="$home/.hermes/commandcode_proxy.py"
+pidfile="$home/.hermes/commandcode_proxy.pid"
+logfile="${HERMES_COMMANDCODE_PROXY_LOG:-$home/.hermes/commandcode_proxy.log}"
+python_bin="${PYTHON:-/usr/bin/python3}"
+
+health_url="http://$host:$port/health"
+
+is_ready() {
+  curl -fsS "$health_url" >/dev/null 2>&1
+}
+
+mkdir -p "$home/.hermes"
+
+if ! is_ready; then
+  if [ -f "$pidfile" ] && ! kill -0 "$(cat "$pidfile")" 2>/dev/null; then
+    rm -f "$pidfile"
+  fi
+
+  if [ ! -f "$pidfile" ]; then
+    nohup "$python_bin" "$proxy" --host "$host" --port "$port" >>"$logfile" 2>&1 &
+    echo "$!" >"$pidfile"
+  fi
+
+  for _ in 1 2 3 4 5 6 7 8 9 10; do
+    is_ready && break
+    sleep 0.2
+  done
+fi
+
+if ! is_ready; then
+  echo "Command Code bridge did not start. See $logfile" >&2
+  exit 1
+fi
+
+exec "$home/.local/bin/hermes" "$@"

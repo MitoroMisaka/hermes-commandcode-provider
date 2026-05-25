@@ -1,0 +1,5 @@
+name: commandcode-provider
+kind: model-provider
+version: 0.1.0
+description: Command Code via local Pi-style alpha/generate bridge
+author: local
