@@ -53,7 +53,11 @@ cd hermes-commandcode-provider
 
 `install.sh` copies the provider plugin, bridge, and helper command into your
 Hermes home. With `--configure`, it also updates `~/.hermes/config.yaml` and
-backs it up first.
+backs it up first. It also applies small Hermes compatibility patches for
+Command Code:
+
+- the model picker counts model-provider plugin fallback models correctly
+- `hermes doctor` accepts Command Code slash-form model ids
 
 ## Use
 
@@ -123,6 +127,22 @@ If your Hermes version shows that warning, either ignore it or run:
 ```
 
 The patch only adds `commandcode` to the doctor allowlist for slash-form model ids.
+
+## Model Picker Note
+
+Some Hermes versions auto-discover user-installed model-provider plugins but do
+not count their `fallback_models` on the first provider picker screen. In that
+case, Command Code can show as `0 models` even though opening it displays the
+models and switching works.
+
+Run this compatibility patch if needed:
+
+```bash
+./scripts/patch_model_picker.py
+```
+
+The patch only teaches the provider overview to count fallback models declared
+by installed model-provider plugins.
 
 ## Files Installed
 

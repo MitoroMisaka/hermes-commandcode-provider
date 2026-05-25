@@ -1,4 +1,4 @@
-"""Command Code provider profile for the local Pi-style bridge."""
+"""Command Code provider profile for the local Go subscription bridge."""
 
 from providers import register_provider
 from providers.base import OMIT_TEMPERATURE, ProviderProfile
@@ -8,7 +8,7 @@ commandcode = ProviderProfile(
     name="commandcode",
     aliases=("command-code", "commandcode-alpha", "cc"),
     display_name="Command Code",
-    description="Command Code via local Pi-style alpha/generate bridge",
+    description="Command Code Go subscription via local OpenAI-compatible bridge",
     signup_url="https://commandcode.ai/",
     env_vars=("COMMANDCODE_API_KEY",),
     base_url="http://127.0.0.1:8788/v1",

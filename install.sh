@@ -33,6 +33,8 @@ install -m 755 "$repo_dir/bin/hermes-commandcode" "$bin_dir/hermes-commandcode"
 
 if [ "$configure" = 1 ]; then
   "$repo_dir/scripts/configure_hermes.py"
+  "$repo_dir/scripts/patch_model_picker.py" || echo "Warning: model picker patch skipped." >&2
+  "$repo_dir/scripts/patch_doctor.py" || echo "Warning: doctor patch skipped." >&2
 fi
 
 echo "Installed Hermes Command Code provider."
