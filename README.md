@@ -11,6 +11,8 @@ around that limitation for personal Hermes usage by running a local
 OpenAI-compatible bridge backed by your existing Command Code subscription
 login.
 
+Chinese explanation: [为什么 Go 订阅可以这样使用](WHY_GO_SUBSCRIPTION_WORKS.zh-CN.md).
+
 This project provides:
 
 - a Hermes `model-provider` plugin named `commandcode`
