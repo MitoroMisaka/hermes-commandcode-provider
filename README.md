@@ -20,6 +20,7 @@ This project provides:
 - model metadata with `context_length` so Hermes context usage displays correctly
 - streaming `usage` chunks so Hermes updates token/session statistics
 - tool-call translation between OpenAI Chat Completions and Command Code events
+- reasoning event translation so thinking-only turns can continue correctly
 
 ## Requirements
 
@@ -113,6 +114,7 @@ The smoke test checks:
 - non-streaming chat works
 - streaming chat returns a final `usage` chunk
 - tool calls are translated correctly
+- reasoning deltas are preserved as `reasoning_content`
 
 ## Hermes Doctor Note
 

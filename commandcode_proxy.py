@@ -503,6 +503,26 @@ def _sse(handler: BaseHTTPRequestHandler, payload: dict[str, Any], api_key: str)
                         ],
                     }
                 )
+        elif event_type == "reasoning-delta":
+            text = event.get("text")
+            if isinstance(text, str) and text:
+                send(
+                    {
+                        "id": completion_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": model,
+                        "choices": [
+                            {
+                                "index": 0,
+                                "delta": {"reasoning_content": text},
+                                "finish_reason": None,
+                            }
+                        ],
+                    }
+                )
+        elif event_type == "reasoning-end":
+            return
         elif event_type == "tool-call":
             has_tool_calls = True
             arguments = event.get("input") or event.get("args") or event.get("arguments") or {}
@@ -564,6 +584,7 @@ def _sse(handler: BaseHTTPRequestHandler, payload: dict[str, Any], api_key: str)
 
 def _non_stream(payload: dict[str, Any], api_key: str) -> dict[str, Any]:
     content: list[str] = []
+    reasoning_content: list[str] = []
     tool_calls: list[dict[str, Any]] = []
     finish_event: dict[str, Any] | None = None
 
@@ -571,6 +592,10 @@ def _non_stream(payload: dict[str, Any], api_key: str) -> dict[str, Any]:
         event_type = event.get("type")
         if event_type == "text-delta" and isinstance(event.get("text"), str):
             content.append(event["text"])
+        elif event_type == "reasoning-delta" and isinstance(event.get("text"), str):
+            reasoning_content.append(event["text"])
+        elif event_type == "reasoning-end":
+            continue
         elif event_type == "tool-call":
             arguments = event.get("input") or event.get("args") or event.get("arguments") or {}
             tool_calls.append(
@@ -592,6 +617,8 @@ def _non_stream(payload: dict[str, Any], api_key: str) -> dict[str, Any]:
             raise RuntimeError(str(message or "Command Code stream error"))
 
     message: dict[str, Any] = {"role": "assistant", "content": "".join(content)}
+    if reasoning_content:
+        message["reasoning_content"] = "".join(reasoning_content)
     if tool_calls:
         message["tool_calls"] = tool_calls
     finish_reason = _map_finish_reason(

@@ -6,6 +6,8 @@ host="${COMMANDCODE_PROXY_HOST:-127.0.0.1}"
 port="${COMMANDCODE_PROXY_PORT:-8788}"
 base="http://$host:$port/v1"
 
+python3 "$repo_dir/scripts/test_reasoning_mapping.py"
+
 python3 "$repo_dir/commandcode_proxy.py" --host "$host" --port "$port" >/tmp/hermes-commandcode-provider.log 2>&1 &
 pid="$!"
 trap 'kill "$pid" >/dev/null 2>&1 || true; rm -f "${stream_tmp:-}"' EXIT
