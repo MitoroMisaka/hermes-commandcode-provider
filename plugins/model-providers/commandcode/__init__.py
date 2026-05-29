@@ -37,6 +37,8 @@ commandcode = ProviderProfile(
         "Qwen/Qwen3.6-Plus",
         "Qwen/Qwen3.7-Max",
         "stepfun/Step-3.5-Flash",
+        "xiaomi/mimo-v2.5-pro",
+        "xiaomi/mimo-v2.5",
         "google/gemini-3.5-flash",
         "google/gemini-3.1-flash-lite",
     ),

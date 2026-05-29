@@ -39,6 +39,8 @@ DEFAULT_MODELS = [
     {"id": "Qwen/Qwen3.7-Max", "name": "Qwen 3.7 Max", "context_length": 1000000},
     {"id": "stepfun/Step-3.5-Flash", "name": "Step 3.5 Flash", "context_length": 1000000},
     {"id": "google/gemini-3.5-flash", "name": "Gemini 3.5 Flash", "context_length": 1000000},
+    {"id": "xiaomi/mimo-v2.5-pro", "name": "MiMo V2.5 Pro", "context_length": 1000000},
+    {"id": "xiaomi/mimo-v2.5", "name": "MiMo V2.5", "context_length": 1000000},
     {"id": "google/gemini-3.1-flash-lite", "name": "Gemini 3.1 Flash Lite", "context_length": 1000000},
 ]
 DEFAULT_MAX_COMPLETION_TOKENS = 32000

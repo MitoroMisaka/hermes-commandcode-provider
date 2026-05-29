@@ -101,6 +101,8 @@ available, and falls back to a bundled catalog. Known context windows include:
 | `claude-sonnet-4-6` | 1000000 |
 | `claude-opus-4-7` | 1000000 |
 | `gpt-5.4` | 400000 |
+| `xiaomi/mimo-v2.5-pro` | 1000000 |
+| `xiaomi/mimo-v2.5` | 1000000 |
 
 ## Smoke Test
 
